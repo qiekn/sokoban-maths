@@ -33,9 +33,17 @@ set(CMAKE_CXX_STANDARD 20)
 
 # header files
 include_directories(include)
+file(GLOB_RECURSE HDRS CONFIGURE_DEPENDS
+    "${CMAKE_SOURCE_DIR}/include/*.h"
+)
+
+# sources
+file(GLOB_RECURSE SRCS CONFIGURE_DEPENDS
+    "${CMAKE_SOURCE_DIR}/src/*.cpp"
+)
 
 # targets
-add_executable(${PROJECT_NAME} ./src/main.cpp)
+add_executable(${PROJECT_NAME} ${SRCS})
 
 # libraries
 target_link_libraries(${PROJECT_NAME} raylib)
@@ -46,3 +54,9 @@ if (APPLE)
     target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
     target_link_libraries(${PROJECT_NAME} "-framework OpenGL")
 endif()
+
+# format
+add_custom_target(format 
+    COMMAND clang-format -i ${SRCS} ${HDRS}
+    COMMENT "Running clang-format on all header & cpp files"
+)
