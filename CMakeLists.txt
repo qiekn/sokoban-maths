@@ -26,6 +26,8 @@ endif()
 #                             Our Project                             |
 #---------------------------------------------------------------------3
 
+add_compile_definitions(SOKOBAN_ASSETS="${CMAKE_CURRENT_LIST_DIR}/assets")
+
 # generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
