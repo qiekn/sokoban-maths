@@ -1,17 +1,15 @@
-# Quick start
+# Sokomaths
 
-## macOS
+> [!ATTENTION] this project is WIP(work in progress)
+
+## Quickstart
 
 ```bash
-brew install raylib
-git clone https://github.com/qiekn/sokomaths.git
+git clone https://github.com/qiekn/sokoban-maths.git
 cmake -B build && make -j$(nproc) -C build
 ./build/game
 ```
 
-`compile_commands.json` for neovim lsp config:
+## Credits
 
-```bash
-cd path/to/your/project
-ln -s build/compile_commands.json ./compile_commands.json
-```
+ECS System: [skypjack/entt](https://github.com/skypjack/entt)
