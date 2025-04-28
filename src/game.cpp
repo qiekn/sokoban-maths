@@ -1,8 +1,14 @@
 #include "game.h"
-#include <raylib.h>
 #include "constants.h"
+#include "level.h"
 
-Game::Game() {
+Game::Game()
+    : render_system_(registry_),
+      move_system_(registry_, entity_map_),
+      win_condition_system_(registry_),
+      level_manager_(registry_, entity_map_) {}
+
+void Game::Run() {
   SetTraceLogLevel(LOG_WARNING);
 
   camera_.target = (Vector2){kCellSize * kCols * 0.5, kCellSize * kRows * 0.5};
@@ -12,12 +18,8 @@ Game::Game() {
 
   InitWindow(kScreenWidth, kScreenHeight, "game");
   SetTargetFPS(kFps);
-}
-
-Game::~Game() { CloseWindow(); }
-
-void Game::Run() {
   is_running_ = true;
+  level_manager_.LoadCurrentLevel();
   while (!WindowShouldClose() && is_running_) {
     Update();
     Draw();
@@ -31,6 +33,7 @@ void Game::Draw() {
   BeginMode2D(camera_);
 
   background_.Draw();
+  render_system_.Draw();
 
   EndMode2D();
   EndDrawing();
