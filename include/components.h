@@ -1,6 +1,7 @@
 #pragma once
 
 #include <raylib.h>
+#include <filesystem>
 #include <functional>
 #include <string>
 
@@ -14,14 +15,21 @@ enum class BoxType {
   kTarget,
 };
 
+enum class SpriteBorderType {
+  kNone,
+  kOutline,
+  kFill,
+};
+
 struct Position {
   int x, y;
 };
 
-struct Renderable {
-  Color color;
-  std::string text;  // text to display (e.g. number, symbol)
-  bool fill;         // fill rectangle or draw outline
+struct SpriteRenderer {
+  Color color = BLANK;
+  std::string text = "";               // text to display (e.g. number, symbol)
+  std::filesystem::path texture_path;  // texture path
+  SpriteBorderType border_type = SpriteBorderType::kNone;
 };
 
 struct Value {

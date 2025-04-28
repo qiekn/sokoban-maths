@@ -1,4 +1,5 @@
 #include "game.h"
+#include <raylib.h>
 #include "constants.h"
 #include "level.h"
 
@@ -19,6 +20,7 @@ void Game::Run() {
   InitWindow(kScreenWidth, kScreenHeight, "game");
   SetTargetFPS(kFps);
   is_running_ = true;
+  level_manager_.LoadLevelDatas();
   level_manager_.LoadCurrentLevel();
   while (!WindowShouldClose() && is_running_) {
     Update();
@@ -32,7 +34,6 @@ void Game::Draw() {
   BeginDrawing();
   BeginMode2D(camera_);
 
-  background_.Draw();
   render_system_.Draw();
 
   EndMode2D();

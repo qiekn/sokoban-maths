@@ -1,11 +1,15 @@
 #include "level.h"
+#include <raylib.h>
 #include "components.h"
+#include "constants.h"
 
 void LevelManager::LoadLevelDatas() {
   // TODO: Load levels from file <2025-04-28 18:33, @qiekn> //
   LevelData level_data;
   level_data.name = "Tutorial 1";
-  level_data.layout = {"##########", "#  $     #", "#  2 + a #", "#  3 * b #", "##########"};
+  level_data.layout = {"###########", "##       ##", "#  2      #", "# + - / * #",
+                       "#       1 #", "## 3      #", "###      ##", "###     ###",
+                       "###    ####", "#####  ####", "#####i$####", "###########"};
   levels_.push_back(level_data);
 }
 
@@ -13,6 +17,10 @@ void LevelManager::LoadCurrentLevel() {
   // clear existing entities
   registry_.clear();
   entity_map_.clear();
+  if (current_level_ < 0 || current_level_ >= levels_.size()) {
+    TraceLog(LOG_ERROR, "level index:%d out of range!", current_level_);
+    return;
+  }
   LevelData data = levels_[current_level_];
 
   // initialize map
@@ -30,42 +38,54 @@ void LevelManager::LoadCurrentLevel() {
       switch (map[y][x]) {
         case '#':
           registry_.emplace<BoxType>(entity, BoxType::kWall);
-          registry_.emplace<Renderable>(entity, Renderable{DARKGRAY, "", true});
+          registry_.emplace<SpriteRenderer>(entity, SpriteRenderer{.color = DARKGRAY});
           break;
         case '$':
           registry_.emplace<BoxType>(entity, BoxType::kPlayer);
-          registry_.emplace<Renderable>(entity, Renderable{BROWN, "", true});
+          registry_.emplace<SpriteRenderer>(entity, SpriteRenderer{.color = BLUE});
           break;
         case '+':
           registry_.emplace<BoxType>(entity, BoxType::kMathBox);
           registry_.emplace<MathOperator>(
               entity, MathOperator{'+', [](int a, int b) { return a + b; }, false});
-          registry_.emplace<Renderable>(entity, Renderable{SKYBLUE, "+", true});
+          registry_.emplace<SpriteRenderer>(
+              entity, SpriteRenderer{.texture_path = kAssets / "sprites/add.png"});
           break;
         case '-':
           registry_.emplace<BoxType>(entity, BoxType::kMathBox);
           registry_.emplace<MathOperator>(
               entity, MathOperator{'-', [](int a, int b) { return a - b; }, false});
-          registry_.emplace<Renderable>(entity, Renderable{SKYBLUE, "-", true});
+          registry_.emplace<SpriteRenderer>(
+              entity, SpriteRenderer{.texture_path = kAssets / "sprites/sub.png"});
           break;
         case '*':
           registry_.emplace<BoxType>(entity, BoxType::kMathBox);
           registry_.emplace<MathOperator>(
               entity, MathOperator{'*', [](int a, int b) { return a * b; }, false});
-          registry_.emplace<Renderable>(entity, Renderable{SKYBLUE, "*", true});
+          registry_.emplace<SpriteRenderer>(
+              entity, SpriteRenderer{.texture_path = kAssets / "sprites/mul.png"});
+          break;
+        case '/':
+          registry_.emplace<BoxType>(entity, BoxType::kMathBox);
+          registry_.emplace<MathOperator>(
+              entity, MathOperator{'/', [](int a, int b) { return a / b; }, false});
+          registry_.emplace<SpriteRenderer>(
+              entity, SpriteRenderer{.texture_path = kAssets / "sprites/div.png"});
           break;
         default:
           if (isdigit(map[y][x])) {
             registry_.emplace<BoxType>(entity, BoxType::kMovable);
             registry_.emplace<Value>(entity, Value{map[y][x] - '0'});
-            registry_.emplace<Renderable>(
-                entity, Renderable{PURPLE, std::to_string(map[y][x] - '0'), true});
+            registry_.emplace<SpriteRenderer>(
+                entity, SpriteRenderer{.color = GRAY,
+                                       .text = std::to_string(map[y][x] - '0'),
+                                       .border_type = SpriteBorderType::kOutline});
           } else if (islower(map[y][x])) {
             registry_.emplace<BoxType>(entity, BoxType::kTarget);
             registry_.emplace<Value>(entity, Value{map[y][x] - 'a' + 1});
             registry_.emplace<Target>(entity, Target{10, false});
-            registry_.emplace<Renderable>(
-                entity, Renderable{GREEN, std::to_string(map[y][x] - 'a' + 1), false});
+            registry_.emplace<SpriteRenderer>(
+                entity, SpriteRenderer{GREEN, std::to_string(map[y][x] - 'a' + 1)});
           }
           break;
       }

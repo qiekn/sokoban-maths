@@ -12,7 +12,8 @@ struct LevelData {
 
 class LevelManager {
 public:
-  explicit LevelManager(Registry& registry, Map& map) : registry_(registry), entity_map_(map) {}
+  explicit LevelManager(Registry& registry, Map& map)
+      : current_level_(0), registry_(registry), entity_map_(map) {}
 
   void LoadLevelDatas();
 

@@ -1,26 +1,43 @@
 #include "systems/render-system.h"
 #include <raylib.h>
 #include "components.h"
+#include "constants.h"
+#include "managers/texture-manager.h"
 
 void RenderSystem::Draw() {
   // draw bg
   DrawBackground();
   DrawGrid();
   // draw entities
-  auto view = registry_.view<Position, Renderable>();
+  auto view = registry_.view<Position, SpriteRenderer>();
   for (auto entity : view) {
     const auto& pos = view.get<Position>(entity);
-    const auto& render = view.get<Renderable>(entity);
+    const auto& render = view.get<SpriteRenderer>(entity);
     float px = pos.x * kCellSize;
     float py = pos.y * kCellSize;
-    if (render.fill) {
-      DrawRectangle(px, py, kCellSize, kCellSize, render.color);
-    } else {
-      DrawRectangleLines(px, py, kCellSize, kCellSize, render.color);
+
+    /* texture */
+    if (!render.texture_path.empty()) {
+      Texture2D& texture = TextureManager::Instance().GetTexture(render.texture_path);
+      DrawTexture(texture, px, py, WHITE);
     }
 
+    /* border type */
+    if (render.border_type == SpriteBorderType::kFill) {
+      DrawRectangle(px + kCellOffset, py + kCellOffset, kCellSizeInner, kCellSizeInner,
+                    render.color);
+    } else if (render.border_type == SpriteBorderType::kOutline) {
+      DrawRectangleLines(px + kCellOffset, py + kCellOffset, kCellSizeInner, kCellSizeInner,
+                         render.color);
+    }
+
+    /* text */
     if (!render.text.empty()) {
-      DrawText(render.text.c_str(), px + kCellSize * 0.5, py + kCellSize * 0.5, 20, WHITE);
+      int text_width = MeasureText(render.text.c_str(), kFontSize);
+      int text_height = kFontSize;
+      float center_x = px + kCellSize * 0.5f - text_width * 0.5f;
+      float center_y = py + kCellSize * 0.5f - text_height * 0.5f;
+      DrawText(render.text.c_str(), center_x, center_y, kFontSize, WHITE);
     }
   }
 }

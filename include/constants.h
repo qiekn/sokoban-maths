@@ -1,8 +1,34 @@
 #pragma once
 
+#include <raylib.h>
+#include <filesystem>
 #include <utility>
+#include "utils.h"
+
+inline const std::filesystem::path kAssets = SOKOBAN_ASSETS;
+
+const int kFontSize = 20;  // inner box text
+const Color kGridColor = Color{47, 34, 86, 255};
+const Color kBorderColor = kGridColor;  // cell border outline color
+
+namespace OperatorColor {
+const Color kBlue = Haxc("#7da2a8");
+const Color kYellow = Haxc("#e1d6a0");
+const Color kPink = Haxc("#cb94b4");
+const Color kViolet = Haxc("#675ab3");
+}  // namespace OperatorColor
+
+enum class OperatorType {
+  kAdd,
+  kSub,
+  kMul,
+  kDiv,
+};
 
 const int kCellSize = 50;
+const int kCellOffset = 3;
+const int kCellSizeInner = kCellSize - 2 * kCellOffset;
+
 const int kRows = 18;
 const int kCols = 22;
 const int kCellsPerRow = kCols;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <raylib.h>
-#include "background.h"
 #include "level.h"
 #include "systems/move-system.h"
 #include "systems/render-system.h"
@@ -19,7 +18,6 @@ private:
   Map entity_map_;
 
   bool is_running_ = false;
-  Background background_ = Background();
   Camera2D camera_ = {0};
 
   /* systems */
