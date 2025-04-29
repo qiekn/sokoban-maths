@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include <string>
 #include <vector>
+#include "managers/maid.h"
 #include "types.h"
 
 struct LevelData {
@@ -12,8 +13,10 @@ struct LevelData {
 
 class LevelManager {
 public:
-  explicit LevelManager(Registry& registry, Map& map)
-      : current_level_(0), registry_(registry), entity_map_(map) {}
+  explicit LevelManager()
+      : current_level_(0),
+        registry_(Maid::Instance().registry_),
+        entity_map_(Maid::Instance().entity_map_) {}
 
   void LoadLevelDatas();
 

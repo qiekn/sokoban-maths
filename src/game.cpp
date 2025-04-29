@@ -4,16 +4,12 @@
 #include "input/input-handler.h"
 #include "level.h"
 
-Game::Game()
-    : render_system_(registry_),
-      input_system_(registry_),
-      move_system_(registry_, entity_map_),
-      win_condition_system_(registry_),
-      level_manager_(registry_, entity_map_) {}
+Game::Game() : render_system_(), input_system_(), move_system_(), level_manager_() {}
 
 void Game::Run() {
   // SetTraceLogLevel(LOG_WARNING);
   SetTraceLogLevel(LOG_DEBUG);
+  DrawFPS(0, 0);
 
   camera_.target = (Vector2){kCellSize * kCols * 0.5, kCellSize * kRows * 0.5};
   camera_.offset = (Vector2){kScreenWidth / 2.0f, kScreenHeight / 2.0f};

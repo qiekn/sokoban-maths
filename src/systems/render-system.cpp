@@ -2,14 +2,16 @@
 #include <raylib.h>
 #include "components.h"
 #include "constants.h"
+#include "managers/maid.h"
 #include "managers/texture-manager.h"
+RenderSystem::RenderSystem() {}
 
 void RenderSystem::Draw() {
   // draw bg
   DrawBackground();
   DrawGrid();
   // draw entities
-  auto view = registry_.view<Position, SpriteRenderer>();
+  auto view = Maid::Instance().registry_.view<Position, SpriteRenderer>();
   for (auto entity : view) {
     const auto& pos = view.get<Position>(entity);
     const auto& render = view.get<SpriteRenderer>(entity);

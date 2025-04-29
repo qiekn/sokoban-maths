@@ -5,7 +5,6 @@
 #include "level.h"
 #include "systems/move-system.h"
 #include "systems/render-system.h"
-#include "systems/win-condition-system.h"
 #include "types.h"
 
 class Game {
@@ -26,7 +25,6 @@ private:
   InputHandler input_system_;
   RenderSystem render_system_;
   MoveSystem move_system_;
-  WinConditionSystem win_condition_system_;
 
   /* method */
   void Update();

@@ -5,8 +5,9 @@
 #include <vector>
 #include "components.h"
 #include "constants.h"
+#include "managers/maid.h"
 
-InputHandler::InputHandler(Registry& registry) : registry_(registry) {}
+InputHandler::InputHandler() {}
 
 InputHandler::~InputHandler() {}
 
@@ -16,7 +17,7 @@ std::unique_ptr<Command> InputHandler::HandleInput() {
   float timer = GetTime();
 
   /* Player Movement */
-  auto player_view = registry_.view<Player>();
+  auto player_view = Maid::Instance().registry_.view<Player>();
   std::vector<Entity> player_entities(player_view->begin(), player_view->end());
   if (timer - last_move_time_ >= move_cooldown_) {
     int dx = 0, dy = 0;
@@ -30,7 +31,7 @@ std::unique_ptr<Command> InputHandler::HandleInput() {
       dy = 1;
     if (dx || dy) {
       last_move_time_ = timer;
-      return std::make_unique<MoveCommand>(registry_, player_entities, dx, dy);
+      return std::make_unique<MoveCommand>(Maid::Instance().registry_, player_entities, dx, dy);
     }
   }
 
