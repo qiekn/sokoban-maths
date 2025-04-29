@@ -13,24 +13,25 @@ InputHandler::~InputHandler() {}
 // game programming design partterns: command
 // https://gpp.tkchu.me/command.html
 std::unique_ptr<Command> InputHandler::HandleInput() {
+  float timer = GetTime();
+
   /* Player Movement */
   auto player_view = registry_.view<Player>();
   std::vector<Entity> player_entities(player_view->begin(), player_view->end());
-
-  if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) {
-    return std::make_unique<MoveCommand>(registry_, player_entities, -1, 0);
-  }
-
-  if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) {
-    return std::make_unique<MoveCommand>(registry_, player_entities, 1, 0);
-  }
-
-  if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
-    return std::make_unique<MoveCommand>(registry_, player_entities, 0, -1);
-  }
-
-  if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {
-    return std::make_unique<MoveCommand>(registry_, player_entities, 0, 1);
+  if (timer - last_move_time_ >= move_cooldown_) {
+    int dx = 0, dy = 0;
+    if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
+      dx = -1;
+    else if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
+      dx = 1;
+    else if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
+      dy = -1;
+    else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
+      dy = 1;
+    if (dx || dy) {
+      last_move_time_ = timer;
+      return std::make_unique<MoveCommand>(registry_, player_entities, dx, dy);
+    }
   }
 
   /* Player Functions */
