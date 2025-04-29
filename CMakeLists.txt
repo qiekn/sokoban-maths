@@ -35,8 +35,10 @@ set(CMAKE_CXX_STANDARD 20)
 
 # header files
 include_directories(include)
+include_directories(deps)
 file(GLOB_RECURSE HDRS CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/include/*.h"
+    "${CMAKE_SOURCE_DIR}/deps/*.h"
 )
 
 # sources
