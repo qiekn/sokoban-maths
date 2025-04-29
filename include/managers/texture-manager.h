@@ -21,12 +21,11 @@ public:
    */
   Texture2D& GetTexture(const std::filesystem::path& path);
 
-  void UnloadAll();
-
 private:
+  TextureManager() {}
   std::unordered_map<std::filesystem::path, Texture2D> textures_;
 
-  TextureManager() {}
+  void UnloadAll();
 
   /** @brief used this texture when loading texture failed */
   Texture2D CreateDefaultTexture();
