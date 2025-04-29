@@ -37,36 +37,33 @@ void LevelManager::LoadCurrentLevel() {
 
       switch (map[y][x]) {
         case '#':
-          registry_.emplace<BoxType>(entity, BoxType::kWall);
+          registry_.emplace<Wall>(entity);
           registry_.emplace<SpriteRenderer>(entity, SpriteRenderer{.color = DARKGRAY});
           break;
         case '$':
-          registry_.emplace<BoxType>(entity, BoxType::kPlayer);
-          registry_.emplace<SpriteRenderer>(entity, SpriteRenderer{.color = BLUE});
+          registry_.emplace<Player>(entity);
+          registry_.emplace<SpriteRenderer>(
+              entity, SpriteRenderer{.color = BLUE, .border_type = SpriteBorderType::kFill});
           break;
         case '+':
-          registry_.emplace<BoxType>(entity, BoxType::kMathBox);
           registry_.emplace<MathOperator>(
               entity, MathOperator{'+', [](int a, int b) { return a + b; }, false});
           registry_.emplace<SpriteRenderer>(
               entity, SpriteRenderer{.texture_path = kAssets / "sprites/add.png"});
           break;
         case '-':
-          registry_.emplace<BoxType>(entity, BoxType::kMathBox);
           registry_.emplace<MathOperator>(
               entity, MathOperator{'-', [](int a, int b) { return a - b; }, false});
           registry_.emplace<SpriteRenderer>(
               entity, SpriteRenderer{.texture_path = kAssets / "sprites/sub.png"});
           break;
         case '*':
-          registry_.emplace<BoxType>(entity, BoxType::kMathBox);
           registry_.emplace<MathOperator>(
               entity, MathOperator{'*', [](int a, int b) { return a * b; }, false});
           registry_.emplace<SpriteRenderer>(
               entity, SpriteRenderer{.texture_path = kAssets / "sprites/mul.png"});
           break;
         case '/':
-          registry_.emplace<BoxType>(entity, BoxType::kMathBox);
           registry_.emplace<MathOperator>(
               entity, MathOperator{'/', [](int a, int b) { return a / b; }, false});
           registry_.emplace<SpriteRenderer>(
@@ -74,14 +71,13 @@ void LevelManager::LoadCurrentLevel() {
           break;
         default:
           if (isdigit(map[y][x])) {
-            registry_.emplace<BoxType>(entity, BoxType::kMovable);
+            registry_.emplace<Number>(entity);
             registry_.emplace<Value>(entity, Value{map[y][x] - '0'});
             registry_.emplace<SpriteRenderer>(
                 entity, SpriteRenderer{.color = GRAY,
                                        .text = std::to_string(map[y][x] - '0'),
                                        .border_type = SpriteBorderType::kOutline});
           } else if (islower(map[y][x])) {
-            registry_.emplace<BoxType>(entity, BoxType::kTarget);
             registry_.emplace<Value>(entity, Value{map[y][x] - 'a' + 1});
             registry_.emplace<Target>(entity, Target{10, false});
             registry_.emplace<SpriteRenderer>(

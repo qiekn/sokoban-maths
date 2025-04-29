@@ -5,6 +5,7 @@
 
 using Registry = entt::registry;
 using Map = std::unordered_map<std::pair<int, int>, entt::entity, PairHash>;
+using Entity = entt::entity;
 
 struct Vector2Int {
   int x, y;

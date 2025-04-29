@@ -41,6 +41,8 @@ const auto kScreenTitle = "game";
 
 const int kFps = 60;
 
+const int kMaxUndoHistry = 50;
+
 enum class Direction {
   kNone = 0,
   kUp,

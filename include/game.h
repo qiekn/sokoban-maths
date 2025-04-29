@@ -1,6 +1,7 @@
 #pragma once
 
 #include <raylib.h>
+#include "input/input-handler.h"
 #include "level.h"
 #include "systems/move-system.h"
 #include "systems/render-system.h"
@@ -22,6 +23,7 @@ private:
 
   /* systems */
   LevelManager level_manager_;
+  InputHandler input_system_;
   RenderSystem render_system_;
   MoveSystem move_system_;
   WinConditionSystem win_condition_system_;

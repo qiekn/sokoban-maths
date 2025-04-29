@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <functional>
 #include <string>
+#include "types.h"
 
 enum class BoxType {
   kWall,
@@ -21,8 +22,17 @@ enum class SpriteBorderType {
   kFill,
 };
 
+struct Player {};
+
+struct Wall {};
+
+struct Number {};
+
 struct Position {
   int x, y;
+
+  void MoveTo(Vector2Int dest) { x = dest.x, y = dest.y; };
+  void MoveTo(int _x, int _y) { x = _x, y = _y; }
 };
 
 struct SpriteRenderer {
