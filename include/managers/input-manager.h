@@ -18,7 +18,7 @@ private:
   Registry& registry_;
 
   float last_move_time_ = 0.0f;
-  const float move_cooldown_ = 0.20f;
+  const float move_cooldown_ = 0.12f;
 
   Vector2Int GetMoveInput();
 };
