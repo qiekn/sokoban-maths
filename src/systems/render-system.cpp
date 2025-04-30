@@ -27,11 +27,11 @@ void RenderSystem::Draw() {
 
     /* border type */
     if (render.type == SpriteType::kFill) {
-      DrawRectangle(px + kCellOffset, py + kCellOffset, kCellSizeInner, kCellSizeInner,
-                    render.color);
+      DrawRectangle(px + kCellOffset, py + kCellOffset, kCellSizeInner,
+                    kCellSizeInner, render.color);
     } else if (render.type == SpriteType::kOutline) {
-      DrawRectangleLines(px + kCellOffset, py + kCellOffset, kCellSizeInner, kCellSizeInner,
-                         render.color);
+      DrawRectangleLines(px + kCellOffset, py + kCellOffset, kCellSizeInner,
+                         kCellSizeInner, render.color);
     }
 
     /* text */

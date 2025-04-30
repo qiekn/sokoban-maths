@@ -15,6 +15,11 @@ public:
   void CreateOperator(Position pos);
   void CreateTarget(Position pos, int val);
 
+  void CreateOperatorAdd(Position pos);
+  void CreateOperatorSub(Position pos);
+  void CreateOperatorMul(Position pos);
+  void CreateOperatorDiv(Position pos);
+
 private:
   Registry& registry_;
 };

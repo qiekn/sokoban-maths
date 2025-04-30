@@ -40,9 +40,9 @@ struct Value {
 };
 
 struct MathOperator {
-  char symbol;  // "+" "-" "*" "/"
+  std::string symbol;  // "+" "-" "*" "/"
   std::function<int(int, int)> operation;
-  bool has_operand;
+  bool has_operand = false;
 };
 
 struct Target {

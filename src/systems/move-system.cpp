@@ -10,8 +10,8 @@
  * @param direction
  * @param count (how many items can be move at once)
  */
-bool TryMove(Registry& registry, Map& mov, Map& immov, MoveBuffer& to_move, Entity entity,
-             Vector2Int dir, int count) {
+bool TryMove(Registry& registry, Map& mov, Map& immov, MoveBuffer& to_move,
+             Entity entity, Vector2Int dir, int count) {
   // get player original position and destination
   auto& pos = registry.get<Position>(entity);
   Vector2Int dest = pos + dir;

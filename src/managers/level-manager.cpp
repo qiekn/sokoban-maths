@@ -33,6 +33,14 @@ void LevelManager::LoadJson() {
         prefabs_.CreatePlayer(pos);
       } else if (type == ".") {
         prefabs_.CreateFloor(pos);
+      } else if (type == "+") {
+        prefabs_.CreateOperatorAdd(pos);
+      } else if (type == "-") {
+        prefabs_.CreateOperatorSub(pos);
+      } else if (type == "*") {
+        prefabs_.CreateOperatorMul(pos);
+      } else if (type == "/") {
+        prefabs_.CreateOperatorDiv(pos);
       }
     }
   }

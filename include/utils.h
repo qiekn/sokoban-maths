@@ -3,7 +3,8 @@
 
 inline Color Haxc(const std::string& color) {
   if (color.size() != 7 || color[0] != '#') {
-    TraceLog(LOG_ERROR, "Invalid color format: %s (expected #RRGGBB)", color.c_str());
+    TraceLog(LOG_ERROR, "Invalid color format: %s (expected #RRGGBB)",
+             color.c_str());
     return WHITE;
   }
 

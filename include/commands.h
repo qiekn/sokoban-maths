@@ -23,7 +23,8 @@ protected:
  */
 class DirectMoveCommand : public Command {
 public:
-  DirectMoveCommand(Registry& registry, const std::vector<Entity>& entities, int dx, int dy)
+  DirectMoveCommand(Registry& registry, const std::vector<Entity>& entities,
+                    int dx, int dy)
       : registry_(registry), entities_(entities), dx_(dx), dy_(dy) {}
 
   DirectMoveCommand(Registry& registry, Entity entity, int dx, int dy)
@@ -43,7 +44,8 @@ private:
 
 /**
  * @class ChainMoveCommand
- * @brief e.g. if you move a player, it will move other adjcent movable items too.
+ * @brief e.g. if you move a player, it will move other adjcent movable items
+ * too.
  *
  */
 class ChainMoveCommand : public Command {
