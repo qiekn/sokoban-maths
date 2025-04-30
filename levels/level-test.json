@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "name": "Test Level 1",
+    "description": "A simple level with numbers and operators",
+    "width": 5,
+    "height": 5
+  },
+  "map": [
+    ["W", "W", "W", "W", "W"],
+    ["W", ".", "P", ".", "W"],
+    ["W", ".", "+", ".", "W"],
+    ["W", ".", "-", ".", "W"],
+    ["W", "W", "W", "W", "W"]
+  ],
+  "entities": {
+    "numbers": [
+      {"id": "N1", "x": 1, "y": 2, "value": 42}
+    ],
+    "targets": [
+      {"id": "T1", "x": 3, "y": 2, "requiredValue": 42}
+    ]
+  }
+}

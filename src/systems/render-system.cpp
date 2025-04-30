@@ -20,16 +20,16 @@ void RenderSystem::Draw() {
     float py = pos.y * kCellSize;
 
     /* texture */
-    if (!render.texture_path.empty()) {
-      Texture2D& texture = TextureManager::Instance().GetTexture(render.texture_path);
+    if (!render.path.empty()) {
+      Texture2D& texture = TextureManager::Instance().GetTexture(render.path);
       DrawTexture(texture, px, py, WHITE);
     }
 
     /* border type */
-    if (render.border_type == SpriteBorderType::kFill) {
+    if (render.type == SpriteType::kFill) {
       DrawRectangle(px + kCellOffset, py + kCellOffset, kCellSizeInner, kCellSizeInner,
                     render.color);
-    } else if (render.border_type == SpriteBorderType::kOutline) {
+    } else if (render.type == SpriteType::kOutline) {
       DrawRectangleLines(px + kCellOffset, py + kCellOffset, kCellSizeInner, kCellSizeInner,
                          render.color);
     }

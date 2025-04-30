@@ -1,6 +1,43 @@
 #include "managers/level-manager.h"
+#include <filesystem>
+#include <fstream>
+#include <string>
+#include "commponents/components.h"
+#include "constants.h"
+#include "json.h"
 
-void LevelManager::LoadJson() {}
+void LevelManager::LoadJson() {
+  TraceLog(LOG_DEBUG, "LevelManager: Load Json");
+  std::filesystem::path path = kLevels / "level-test.json";
+  std::ifstream file(path);
+  if (!file.is_open()) {
+    TraceLog(LOG_ERROR, "failed to open level file: %s", path.c_str());
+  }
+
+  nlohmann::json leveldata;
+  file >> leveldata;
+
+  auto metadata = leveldata["metadata"];
+  int width = metadata["width"];
+  int height = metadata["height"];
+
+  auto map = leveldata["map"].get<std::vector<std::vector<std::string>>>();
+
+  for (int y = 0; y < height; ++y) {
+    for (int x = 0; x < width; ++x) {
+      const std::string& type = map[y][x];
+      TraceLog(LOG_DEBUG, "Create %s (%d, %d)", type.c_str(), x, y);
+      auto pos = Position{x, y};
+      if (type == "W") {
+        prefabs_.CreateWall(pos);
+      } else if (type == "P") {
+        prefabs_.CreatePlayer(pos);
+      } else if (type == ".") {
+        prefabs_.CreateFloor(pos);
+      }
+    }
+  }
+}
 
 void LevelManager::InitLevel() {}
 

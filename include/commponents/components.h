@@ -16,10 +16,11 @@ enum class BoxType {
   kTarget,
 };
 
-enum class SpriteBorderType {
+enum class SpriteType {
   kNone,
   kOutline,
   kFill,
+  kTexture,
 };
 
 struct Position {
@@ -41,9 +42,9 @@ struct Number {
 
 struct SpriteRenderer {
   Color color = BLANK;
-  std::string text = "";               // text to display (e.g. number, symbol)
-  std::filesystem::path texture_path;  // texture path
-  SpriteBorderType border_type = SpriteBorderType::kNone;
+  std::string text = "";       // text to display (e.g. number, symbol)
+  std::filesystem::path path;  // texture path
+  SpriteType type = SpriteType::kNone;
 };
 
 struct Value {

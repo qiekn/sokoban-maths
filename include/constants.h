@@ -5,7 +5,8 @@
 #include <utility>
 #include "utils.h"
 
-inline const std::filesystem::path kAssets = SOKOBAN_ASSETS;
+const std::filesystem::path kAssets = SOKOBAN_ASSETS;
+const std::filesystem::path kLevels = SOKOBAN_LEVELS;
 
 const int kFontSize = 20;  // inner box text
 const Color kGridColor = Color{47, 34, 86, 255};

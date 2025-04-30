@@ -1,4 +1,5 @@
 #include "entities/prefabs.h"
+#include <raylib.h>
 #include "commponents/components.h"
 #include "entt.h"
 
@@ -10,18 +11,36 @@ void Prefabs::CreatePlayer(Position pos) {
   auto entity = registry_.create();
   registry_.emplace<Player>(entity);
   registry_.emplace<Position>(entity, pos);
+  auto sprite_renderer = SpriteRenderer{
+      .color = BLUE,
+      .text = "P",
+      .type = SpriteType::kFill,
+  };
+  registry_.emplace<SpriteRenderer>(entity, sprite_renderer);
 }
 
 void Prefabs::CreateBox(Position pos) {
   auto entity = registry_.create();
   registry_.emplace<Box>(entity);
   registry_.emplace<Position>(entity, pos);
+  auto sprite_renderer = SpriteRenderer{
+      .color = YELLOW,
+      .text = "B",
+      .type = SpriteType::kFill,
+  };
+  registry_.emplace<SpriteRenderer>(entity, sprite_renderer);
 }
 
 void Prefabs::CreateWall(Position pos) {
   auto entity = registry_.create();
   registry_.emplace<Wall>(entity);
   registry_.emplace<Position>(entity, pos);
+  auto sprite_renderer = SpriteRenderer{
+      .color = GRAY,
+      .text = "W",
+      .type = SpriteType::kFill,
+  };
+  registry_.emplace<SpriteRenderer>(entity, sprite_renderer);
 }
 
 void Prefabs::CreateFloor(Position pos) {

@@ -6,11 +6,25 @@
 #include "entities/prefabs.h"
 #include "types.h"
 
+enum class TileType {
+  kNumber,
+  kSprite = 10000,
+  kFloor,
+  kPlayer,
+  kWall,
+  kOperator = 20000,
+  kAdd,
+  kSub,
+  kMul,
+  kDiv,
+  kTarget = 30000,
+};
+
 struct LevelData {
   std::string name;
   int width;
   int height;
-  std::vector<std::vector<std::string>> map;
+  std::vector<std::vector<TileType>> map;
 };
 
 class LevelManager {

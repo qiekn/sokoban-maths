@@ -27,6 +27,7 @@ endif()
 #---------------------------------------------------------------------3
 
 add_compile_definitions(SOKOBAN_ASSETS="${CMAKE_CURRENT_LIST_DIR}/assets")
+add_compile_definitions(SOKOBAN_LEVELS="${CMAKE_CURRENT_LIST_DIR}/levels")
 
 # generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -36,9 +37,9 @@ set(CMAKE_CXX_STANDARD 20)
 # header files
 include_directories(include)
 include_directories(deps)
+
 file(GLOB_RECURSE HDRS CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/include/*.h"
-    "${CMAKE_SOURCE_DIR}/deps/*.h"
 )
 
 # sources
