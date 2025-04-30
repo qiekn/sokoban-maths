@@ -12,12 +12,12 @@
     ["W", ".", "-", ".", "W"],
     ["W", "W", "W", "W", "W"]
   ],
-  "entities": {
+  "extra": {
     "numbers": [
-      {"id": "N1", "x": 1, "y": 2, "value": 42}
+      {"x": 1, "y": 2, "value": 42}
     ],
     "targets": [
-      {"id": "T1", "x": 3, "y": 2, "requiredValue": 42}
+      {"x": 3, "y": 2, "requiredValue": 42}
     ]
   }
 }
