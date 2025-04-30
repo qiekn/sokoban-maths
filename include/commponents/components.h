@@ -6,16 +6,6 @@
 #include <string>
 #include "types.h"
 
-enum class BoxType {
-  kWall,
-  kPlayer,
-  kMovable,
-  kNumber,
-  kOperator,
-  kMathBox,
-  kTarget,
-};
-
 enum class SpriteType {
   kNone,
   kOutline,
@@ -23,11 +13,9 @@ enum class SpriteType {
   kTexture,
 };
 
-struct Position {
-  int x, y;
-
-  void MoveTo(Vector2Int dest) { x = dest.x, y = dest.y; };
-  void MoveTo(int _x, int _y) { x = _x, y = _y; }
+struct Position : public Vector2Int {
+  Position() : Vector2Int() {}
+  Position(int x, int y) : Vector2Int(x, y) {}
 };
 
 struct Player {};
@@ -61,3 +49,7 @@ struct Target {
   int target_value;
   bool satisfied;
 };
+
+struct Movable {};
+
+struct Imovable {};

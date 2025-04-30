@@ -35,6 +35,7 @@ void Prefabs::CreateWall(Position pos) {
   auto entity = registry_.create();
   registry_.emplace<Wall>(entity);
   registry_.emplace<Position>(entity, pos);
+  registry_.emplace<Imovable>(entity);
   auto sprite_renderer = SpriteRenderer{
       .color = GRAY,
       .text = "W",
@@ -53,6 +54,7 @@ void Prefabs::CraeteNumber(Position pos, int val) {
   auto entity = registry_.create();
   registry_.emplace<Number>(entity, val);
   registry_.emplace<Position>(entity, pos);
+  registry_.emplace<Movable>(entity);
 }
 
 void Prefabs::CreateOperator(Position pos) {

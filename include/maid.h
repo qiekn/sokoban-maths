@@ -39,7 +39,7 @@ private:
         prefabs_(registry_),
         entity_map_(),
         level_manager_(registry_, prefabs_),
-        input_system_(),
+        input_system_(registry_),
         move_system_(registry_),
         render_system_() {}
 };

@@ -26,7 +26,6 @@ void LevelManager::LoadJson() {
   for (int y = 0; y < height; ++y) {
     for (int x = 0; x < width; ++x) {
       const std::string& type = map[y][x];
-      TraceLog(LOG_DEBUG, "Create %s (%d, %d)", type.c_str(), x, y);
       auto pos = Position{x, y};
       if (type == "W") {
         prefabs_.CreateWall(pos);
@@ -58,6 +57,7 @@ void LevelManager::NextLevel() {
   SetLevel(current_level_ + 1);
   InitLevel();
 }
+
 void LevelManager::PrevLevel() {
   SetLevel(current_level_ - 1);
   InitLevel();
