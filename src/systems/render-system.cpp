@@ -23,6 +23,7 @@ void RenderSystem::Draw() {
     if (!render.path.empty()) {
       Texture2D& texture = TextureManager::Instance().GetTexture(render.path);
       DrawTexture(texture, px, py, WHITE);
+      DrawRectangleLines(px, py, kCellSize, kCellSize, kBorderColor);
     }
 
     /* border type */
