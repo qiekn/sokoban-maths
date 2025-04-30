@@ -77,7 +77,7 @@ void Prefabs::CreateOperatorSub(Position pos) {
   auto entity = registry_.create();
   auto sub = [](int a, int b) { return a - b; };
   auto sprite_renderer = SpriteRenderer{
-      .path = kAssets / "sprites/add.png",
+      .path = kAssets / "sprites/sub.png",
       .type = SpriteType::kTexture,
   };
   registry_.emplace<MathOperator>(entity, "+", sub);
@@ -90,7 +90,7 @@ void Prefabs::CreateOperatorMul(Position pos) {
   auto entity = registry_.create();
   auto mul = [](int a, int b) { return a * b; };
   auto sprite_renderer = SpriteRenderer{
-      .path = kAssets / "sprites/add.png",
+      .path = kAssets / "sprites/mul.png",
       .type = SpriteType::kTexture,
   };
   registry_.emplace<MathOperator>(entity, "+", mul);
@@ -103,7 +103,7 @@ void Prefabs::CreateOperatorDiv(Position pos) {
   auto entity = registry_.create();
   auto div = [](int a, int b) { return a / b; };
   auto sprite_renderer = SpriteRenderer{
-      .path = kAssets / "sprites/add.png",
+      .path = kAssets / "sprites/div.png",
       .type = SpriteType::kTexture,
   };
   registry_.emplace<MathOperator>(entity, "+", div);
