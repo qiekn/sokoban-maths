@@ -1,10 +1,9 @@
 #include "game.h"
 #include <raylib.h>
 #include "constants.h"
-#include "input/input-handler.h"
-#include "level.h"
+#include "maid.h"
 
-Game::Game() : render_system_(), input_system_(), move_system_(), level_manager_() {}
+Game::Game() {}
 
 void Game::Run() {
   // SetTraceLogLevel(LOG_WARNING);
@@ -19,21 +18,23 @@ void Game::Run() {
   InitWindow(kScreenWidth, kScreenHeight, "game");
   SetTargetFPS(kFps);
   is_running_ = true;
-  level_manager_.LoadLevelDatas();
-  level_manager_.LoadCurrentLevel();
+
+  Maid::Instance().level_manager_.LoadJson();
+  Maid::Instance().level_manager_.InitLevel();
+
   while (!WindowShouldClose() && is_running_) {
     Update();
     Draw();
   }
 }
 
-void Game::Update() { input_system_.Update(); }
+void Game::Update() { Maid::Instance().input_system_.Update(); }
 
 void Game::Draw() {
   BeginDrawing();
   BeginMode2D(camera_);
 
-  render_system_.Draw();
+  Maid::Instance().render_system_.Draw();
 
   EndMode2D();
   EndDrawing();

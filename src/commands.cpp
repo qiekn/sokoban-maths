@@ -1,5 +1,5 @@
-#include "input/commands.h"
-#include "components.h"
+#include "commands.h"
+#include "commponents/components.h"
 
 bool Command::IsEmpty() { return is_empty_command_; }
 

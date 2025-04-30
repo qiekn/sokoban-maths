@@ -1,9 +1,10 @@
 #include "systems/render-system.h"
 #include <raylib.h>
-#include "components.h"
+#include "commponents/components.h"
 #include "constants.h"
-#include "managers/maid.h"
+#include "maid.h"
 #include "managers/texture-manager.h"
+
 RenderSystem::RenderSystem() {}
 
 void RenderSystem::Draw() {

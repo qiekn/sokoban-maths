@@ -22,17 +22,21 @@ enum class SpriteBorderType {
   kFill,
 };
 
-struct Player {};
-
-struct Wall {};
-
-struct Number {};
-
 struct Position {
   int x, y;
 
   void MoveTo(Vector2Int dest) { x = dest.x, y = dest.y; };
   void MoveTo(int _x, int _y) { x = _x, y = _y; }
+};
+
+struct Player {};
+
+struct Wall {};
+
+struct Box {};
+
+struct Number {
+  int val;
 };
 
 struct SpriteRenderer {

@@ -2,12 +2,12 @@
 
 #include <list>
 #include <memory>
-#include "input/commands.h"
+#include "commands.h"
 
-class InputHandler {
+class InputManager {
 public:
-  InputHandler();
-  virtual ~InputHandler();
+  InputManager();
+  virtual ~InputManager();
 
   std::unique_ptr<Command> HandleInput();
   void Update();

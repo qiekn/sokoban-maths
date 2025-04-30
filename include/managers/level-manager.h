@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "entities/prefabs.h"
-#include "maid.h"
 #include "types.h"
 
 struct LevelData {
@@ -16,10 +15,8 @@ struct LevelData {
 
 class LevelManager {
 public:
-  explicit LevelManager()
-      : current_level_(0),
-        registry_(Maid::Instance().registry_),
-        prefabs_(Maid::Instance().registry_) {}
+  explicit LevelManager(Registry& registry, Prefabs& prefabs)
+      : current_level_(0), registry_(registry), prefabs_(prefabs) {}
 
   /** @brief load level data from json files */
   void LoadJson();

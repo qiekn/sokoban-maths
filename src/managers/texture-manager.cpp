@@ -1,6 +1,4 @@
 #include "managers/texture-manager.h"
-#include <raylib.h>
-#include <filesystem>
 
 Texture2D& TextureManager::GetTexture(const std::filesystem::path& path) {
   auto it = textures_.find(path);

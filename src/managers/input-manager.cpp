@@ -1,19 +1,19 @@
-#include "input/input-handler.h"
+#include "managers/input-manager.h"
 #include <raylib.h>
 #include <memory>
 #include <utility>
 #include <vector>
-#include "components.h"
+#include "commponents/components.h"
 #include "constants.h"
-#include "managers/maid.h"
+#include "maid.h"
 
-InputHandler::InputHandler() {}
+InputManager::InputManager() {}
 
-InputHandler::~InputHandler() {}
+InputManager::~InputManager() {}
 
 // game programming design partterns: command
 // https://gpp.tkchu.me/command.html
-std::unique_ptr<Command> InputHandler::HandleInput() {
+std::unique_ptr<Command> InputManager::HandleInput() {
   float timer = GetTime();
 
   /* Player Movement */
@@ -56,7 +56,7 @@ std::unique_ptr<Command> InputHandler::HandleInput() {
   return nullptr;
 }
 
-void InputHandler::Update() {
+void InputManager::Update() {
   auto cmd = std::move(HandleInput());
   if (cmd == nullptr) return;
   if (!cmd->IsEmpty()) {

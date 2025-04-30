@@ -1,6 +1,6 @@
 #include "managers/level-manager.h"
 
-void LevelManager::Load() {}
+void LevelManager::LoadJson() {}
 
 void LevelManager::InitLevel() {}
 
