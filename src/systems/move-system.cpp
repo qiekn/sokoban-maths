@@ -1,5 +1,6 @@
 #include "systems/move-system.h"
 #include "commponents/components.h"
+#include "constants.h"
 #include "types.h"
 
 /**
@@ -18,6 +19,11 @@ bool TryMove(Registry& registry, Map& mov, Map& immov, MoveBuffer& to_move, Enti
   // hit obstacle
   if (immov.find(dest) != immov.end()) {
     TraceLog(LOG_DEBUG, "TryMove: (%d %d) Hit Obstacle", pos.x + 1, pos.y + 1);
+    return false;
+  }
+
+  // check map border
+  if (dest.x < 0 || dest.x >= kCols || dest.y < 0 || dest.y >= kRows) {
     return false;
   }
 
