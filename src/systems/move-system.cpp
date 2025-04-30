@@ -31,9 +31,13 @@ bool TryMove(Registry& registry, Map& mov, Map& immov, MoveBuffer& to_move,
   to_move.emplace_back(entity, dir);
 
   // hit movable item, recur trymove other
-  if (count > 0 && mov.find(dest) != mov.end()) {
-    Entity other = mov[dest];
-    return TryMove(registry, mov, immov, to_move, other, dir, --count);
+  if (mov.find(dest) != mov.end()) {
+    if (count >= 1) {
+      Entity other = mov[dest];
+      return TryMove(registry, mov, immov, to_move, other, dir, --count);
+    }
+    // can't push bacause of no 'count' left
+    return false;
   }
 
   return true;
