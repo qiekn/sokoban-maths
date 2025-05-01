@@ -1,17 +1,47 @@
 #include "systems/render-system.h"
 #include <raylib.h>
+#include <string>
 #include "commponents/components.h"
 #include "constants.h"
 #include "maid.h"
 #include "managers/texture-manager.h"
+#include "utils.h"
 
 RenderSystem::RenderSystem() {}
 
 void RenderSystem::Draw() {
-  // draw bg
   DrawBackground();
   DrawGrid();
-  // draw entities
+  DrawEntities();
+  DrawNumbers();
+}
+
+void RenderSystem::DrawBackground() {
+  auto background_outer = Color{38, 30, 67, 255};
+  auto background_inner = Color{26, 19, 35, 255};
+  ClearBackground(background_outer);
+  auto height = kCellSize * kRows;
+  auto width = kCellSize * kCols;
+  DrawRectangle(0, 0, width, height, background_inner);
+}
+
+void RenderSystem::DrawGrid() {
+  int scale = 1;
+  int sz = kCellSize * scale;
+  Color color = Color{47, 34, 86, 255};
+
+  // horizontal lines
+  for (int i = 0; i <= kRows; i++) {
+    DrawLine(0, i * sz, kCols * sz, i * sz, color);
+  }
+
+  // vertical lines
+  for (int i = 0; i <= kCols; i++) {
+    DrawLine(i * sz, 0, i * sz, kRows * sz, color);
+  }
+}
+
+void RenderSystem::DrawEntities() {
   auto view = Maid::Instance().registry_.view<Position, SpriteRenderer>();
   for (auto entity : view) {
     const auto& pos = view.get<Position>(entity);
@@ -38,11 +68,7 @@ void RenderSystem::Draw() {
 
     /* text */
     if (!render.text.empty()) {
-      int text_width = MeasureText(render.text.c_str(), kFontSize);
-      int text_height = kFontSize;
-      float center_x = px + kCellSize * 0.5f - text_width * 0.5f;
-      float center_y = py + kCellSize * 0.5f - text_height * 0.5f;
-      DrawText(render.text.c_str(), center_x, center_y, kFontSize, WHITE);
+      HelperDrawText(render.text.c_str(), pos, WHITE);
     }
 
     // always draw outline
@@ -50,27 +76,22 @@ void RenderSystem::Draw() {
   }
 }
 
-void RenderSystem::DrawBackground() {
-  auto background_outer = Color{38, 30, 67, 255};
-  auto background_inner = Color{26, 19, 35, 255};
-  ClearBackground(background_outer);
-  auto height = kCellSize * kRows;
-  auto width = kCellSize * kCols;
-  DrawRectangle(0, 0, width, height, background_inner);
+void RenderSystem::DrawNumbers() {
+  auto view = Maid::Instance().registry_.view<Position, Number>();
+  for (auto entity : view) {
+    const auto& pos = view.get<Position>(entity);
+    const auto& number = view.get<Number>(entity);
+
+    auto text = std::to_string(number.val);
+    HelperDrawText(text.c_str(), pos, WHITE);
+  }
 }
 
-void RenderSystem::DrawGrid() {
-  int scale = 1;
-  int sz = kCellSize * scale;
-  Color color = Color{47, 34, 86, 255};
-
-  // horizontal lines
-  for (int i = 0; i <= kRows; i++) {
-    DrawLine(0, i * sz, kCols * sz, i * sz, color);
-  }
-
-  // vertical lines
-  for (int i = 0; i <= kCols; i++) {
-    DrawLine(i * sz, 0, i * sz, kRows * sz, color);
-  }
+void RenderSystem::HelperDrawText(const char* text, Position pos, Color color) {
+  int text_width = MeasureText(text, kFontSize);
+  int text_height = kFontSize;
+  auto world_pos = GridToWorld(pos);
+  float center_x = world_pos.x + kCellSize * 0.5f - text_width * 0.5f;
+  float center_y = world_pos.y + kCellSize * 0.5f - text_height * 0.5f;
+  DrawText(text, center_x, center_y, kFontSize, WHITE);
 }

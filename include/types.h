@@ -39,6 +39,10 @@ struct Vector2Int {
   }
 };
 
+struct Vector2Float {
+  float x, y;
+};
+
 using Registry = entt::registry;
 using Entity = entt::entity;
 

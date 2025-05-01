@@ -51,7 +51,7 @@ void Prefabs::CreateFloor(Position pos) {
   registry_.emplace<Position>(entity, pos);
 }
 
-void Prefabs::CraeteNumber(Position pos, int val) {
+void Prefabs::CreateNumber(Position pos, int val) {
   auto entity = registry_.create();
   registry_.emplace<Number>(entity, val);
   registry_.emplace<Position>(entity, pos);
@@ -119,7 +119,6 @@ void Prefabs::CreateOperator(Position pos) {
 }
 
 // Targets
-
 void Prefabs::CreateTarget(Position pos, int value) {
   auto entity = registry_.create();
   registry_.emplace<Target>(entity);

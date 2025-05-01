@@ -2,13 +2,14 @@
 
 #include <raylib.h>
 #include <filesystem>
-#include <utility>
 #include "utils.h"
 
 const std::filesystem::path kAssets = SOKOBAN_ASSETS;
 const std::filesystem::path kLevels = SOKOBAN_LEVELS;
 
-const int kFontSize = 20;  // inner box text
+// Colors
+
+Color Haxc(const std::string& color);
 const Color kBackgroundOuter = Haxc("#261e43");
 const Color kBackgroundInner = Haxc("#1a1323");
 
@@ -28,6 +29,8 @@ enum class OperatorType {
   kMul,
   kDiv,
 };
+
+const int kFontSize = 24;  // inner box text
 
 const int kCellSize = 50;
 const int kCellOffset = 3;

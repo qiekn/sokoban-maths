@@ -44,6 +44,26 @@ void LevelManager::LoadJson() {
       }
     }
   }
+
+  // numbers
+  auto numbers = leveldata["numbers"];
+  for (const auto& number : numbers) {
+    int x = number["x"];
+    int y = number["y"];
+    int value = number["value"];
+    auto pos = Position{x, y};
+    prefabs_.CreateNumber(pos, value);
+  }
+
+  // targets
+  auto targets = leveldata["targets"];
+  for (const auto& target : targets) {
+    int x = target["x"];
+    int y = target["y"];
+    int requiredValue = target["requiredValue"];
+    auto pos = Position{x, y};
+    prefabs_.CreateTarget(pos, requiredValue);
+  }
 }
 
 void LevelManager::InitLevel() {}

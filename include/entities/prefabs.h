@@ -11,7 +11,7 @@ public:
   void CreateBox(Position pos);
   void CreateWall(Position pos);
   void CreateFloor(Position pos);
-  void CraeteNumber(Position pos, int val);
+  void CreateNumber(Position pos, int val);
   void CreateOperator(Position pos);
   void CreateTarget(Position pos, int val);
 
