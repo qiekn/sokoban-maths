@@ -38,9 +38,9 @@ void Prefabs::CreateWall(Position pos) {
   registry_.emplace<Position>(entity, pos);
   registry_.emplace<Imovable>(entity);
   auto sprite_renderer = SpriteRenderer{
-      .color = GRAY,
-      .text = "W",
-      .type = SpriteType::kFill,
+      .color = kBackgroundOuter,
+      .text = "",
+      .type = SpriteType::kFull,
   };
   registry_.emplace<SpriteRenderer>(entity, sprite_renderer);
 }

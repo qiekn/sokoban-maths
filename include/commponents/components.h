@@ -10,6 +10,7 @@ enum class SpriteType {
   kNone,
   kOutline,
   kFill,
+  kFull,
   kTexture,
 };
 

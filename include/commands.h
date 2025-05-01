@@ -62,6 +62,17 @@ private:
   MoveBuffer to_move_;
 };
 
+class ResetCommand : public Command {
+public:
+  ResetCommand(Registry& registry) : registry_(registry) {}
+
+  virtual void Execute() override;
+  virtual void Undo() override;
+
+private:
+  Registry& registry_;
+};
+
 /**
  * @class EmptyCommand
  * @brief Do Nothing. Just Return

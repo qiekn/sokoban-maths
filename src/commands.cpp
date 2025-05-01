@@ -33,3 +33,7 @@ void ChainMoveCommand::Undo() {
     pos -= dir;
   }
 }
+
+// TODO:  <2025-04-30 21:48, @qiekn> //
+void ResetCommand::Execute() {}
+void ResetCommand::Undo() {}

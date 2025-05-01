@@ -23,7 +23,6 @@ void RenderSystem::Draw() {
     if (!render.path.empty()) {
       Texture2D& texture = TextureManager::Instance().GetTexture(render.path);
       DrawTexture(texture, px, py, WHITE);
-      DrawRectangleLines(px, py, kCellSize, kCellSize, kBorderColor);
     }
 
     /* border type */
@@ -33,6 +32,8 @@ void RenderSystem::Draw() {
     } else if (render.type == SpriteType::kOutline) {
       DrawRectangleLines(px + kCellOffset, py + kCellOffset, kCellSizeInner,
                          kCellSizeInner, render.color);
+    } else if (render.type == SpriteType::kFull) {
+      DrawRectangle(px, py, kCellSize, kCellSize, render.color);
     }
 
     /* text */
@@ -43,6 +44,9 @@ void RenderSystem::Draw() {
       float center_y = py + kCellSize * 0.5f - text_height * 0.5f;
       DrawText(render.text.c_str(), center_x, center_y, kFontSize, WHITE);
     }
+
+    // always draw outline
+    DrawRectangleLines(px, py, kCellSize, kCellSize, kBorderColor);
   }
 }
 

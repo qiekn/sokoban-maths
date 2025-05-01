@@ -17,8 +17,8 @@ private:
   std::list<std::unique_ptr<Command>> history_;
   Registry& registry_;
 
-  float last_move_time_ = 0.0f;
-  const float move_cooldown_ = 0.12f;
+  float last_trigger_time_ = 0.0f;
+  const float cooldown_ = 0.12f;
 
   Vector2Int GetMoveInput();
 };

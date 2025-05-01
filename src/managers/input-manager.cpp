@@ -16,6 +16,7 @@ InputManager::~InputManager() {}
 // game programming design partterns: command
 // https://gpp.tkchu.me/command.html
 std::unique_ptr<Command> InputManager::HandleInput() {
+  double timer = GetTime();
   // player Movement
   {
     // get player entities
@@ -31,17 +32,20 @@ std::unique_ptr<Command> InputManager::HandleInput() {
   }
 
   /* Player Functions */
-  if (IsKeyPressed(KEY_Z)) {
-    if (!history_.empty()) {
-      auto cmd = std::move(history_.back());
-      history_.pop_back();
-      cmd->Undo();
+  if (timer - last_trigger_time_ >= cooldown_) {
+    if (IsKeyDown(KEY_Z)) {
+      last_trigger_time_ = timer;
+      if (!history_.empty()) {
+        auto cmd = std::move(history_.back());
+        history_.pop_back();
+        cmd->Undo();
+      }
+      return std::make_unique<EmptyCommand>();
     }
-    return std::make_unique<EmptyCommand>();
   }
 
   if (IsKeyPressed(KEY_R)) {
-    // todo
+    return std::make_unique<ResetCommand>(registry_);
   }
 
   if (IsKeyPressed(KEY_SPACE)) {
@@ -66,7 +70,7 @@ void InputManager::Update() {
 Vector2Int InputManager::GetMoveInput() {
   float timer = GetTime();
   int dx = 0, dy = 0;
-  if (timer - last_move_time_ >= move_cooldown_) {
+  if (timer - last_trigger_time_ >= cooldown_) {
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
       dx = -1;
     else if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
@@ -76,7 +80,7 @@ Vector2Int InputManager::GetMoveInput() {
     else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
       dy = 1;
     if (dx || dy) {
-      last_move_time_ = timer;
+      last_trigger_time_ = timer;
     }
   }
   return Vector2Int{dx, dy};
