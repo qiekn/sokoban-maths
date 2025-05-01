@@ -5,6 +5,7 @@
 #include "constants.h"
 #include "maid.h"
 #include "managers/texture-manager.h"
+#include "types.h"
 #include "utils.h"
 
 RenderSystem::RenderSystem() {}
@@ -42,34 +43,42 @@ void RenderSystem::DrawGrid() {
 }
 
 void RenderSystem::DrawEntities() {
-  auto view = Maid::Instance().registry_.view<Position, SpriteRenderer>();
+  auto view = Maid::Instance().registry_.view<Position, SpriteRenderer>(
+      entt::exclude<Disable>);
   for (auto entity : view) {
     const auto& pos = view.get<Position>(entity);
     const auto& render = view.get<SpriteRenderer>(entity);
     float px = pos.x * kCellSize;
     float py = pos.y * kCellSize;
 
-    /* texture */
-    if (!render.path.empty()) {
-      Texture2D& texture = TextureManager::Instance().GetTexture(render.path);
-      DrawTexture(texture, px, py, WHITE);
+    // clang-format off
+    switch (render.type) {
+      case SpriteType::kOutline:
+        DrawRectangleLines(px + kCellOffset, py + kCellOffset, kCellSizeInner, kCellSizeInner, render.color);
+        break;
+      case SpriteType::kFill:
+        DrawRectangle(px + kCellOffset, py + kCellOffset, kCellSizeInner, kCellSizeInner, render.color);
+        break;
+      case SpriteType::kFull:
+        DrawRectangle(px, py, kCellSize, kCellSize, render.color);
+        break;
+      case SpriteType::kText:
+        DrawRectangle(px, py, kCellSize, kCellSize, render.color);
+        if (!render.text.empty()) {
+          HelperDrawText(render.text.c_str(), pos, WHITE);
+        }
+        break;
+      case SpriteType::kTexture:
+        /* texture */
+        if (!render.path.empty()) {
+          Texture2D& texture = TextureManager::Instance().GetTexture(render.path);
+          DrawTexture(texture, px, py, WHITE);
+        }
+        break;
+      default:
+        break;
     }
-
-    /* border type */
-    if (render.type == SpriteType::kFill) {
-      DrawRectangle(px + kCellOffset, py + kCellOffset, kCellSizeInner,
-                    kCellSizeInner, render.color);
-    } else if (render.type == SpriteType::kOutline) {
-      DrawRectangleLines(px + kCellOffset, py + kCellOffset, kCellSizeInner,
-                         kCellSizeInner, render.color);
-    } else if (render.type == SpriteType::kFull) {
-      DrawRectangle(px, py, kCellSize, kCellSize, render.color);
-    }
-
-    /* text */
-    if (!render.text.empty()) {
-      HelperDrawText(render.text.c_str(), pos, WHITE);
-    }
+    // clang-format on
 
     // always draw outline
     DrawRectangleLines(px, py, kCellSize, kCellSize, kBorderColor);
@@ -77,12 +86,13 @@ void RenderSystem::DrawEntities() {
 }
 
 void RenderSystem::DrawNumbers() {
-  auto view = Maid::Instance().registry_.view<Position, Number>();
+  auto view =
+      Maid::Instance().registry_.view<Position, Number>(entt::exclude<Disable>);
   for (auto entity : view) {
     const auto& pos = view.get<Position>(entity);
     const auto& number = view.get<Number>(entity);
 
-    auto text = std::to_string(number.val);
+    auto text = std::to_string(number.value);
     HelperDrawText(text.c_str(), pos, WHITE);
   }
 }

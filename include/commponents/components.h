@@ -11,6 +11,7 @@ enum class SpriteType {
   kOutline,
   kFill,
   kFull,
+  kText,  // text with squire colored background
   kTexture,
 };
 
@@ -26,7 +27,7 @@ struct Wall {};
 struct Box {};
 
 struct Number {
-  int val;
+  int value;
 };
 
 struct SpriteRenderer {
@@ -41,9 +42,9 @@ struct Value {
 };
 
 struct MathOperator {
-  std::string symbol;  // "+" "-" "*" "/"
-  std::function<int(int, int)> operation;
-  bool has_operand = false;
+  std::string op;                          // display symbol
+  std::function<int(int, int)> calculate;  // storage operation logic
+  int value = 0;
 };
 
 struct Target {
@@ -54,3 +55,6 @@ struct Target {
 struct Movable {};
 
 struct Imovable {};
+
+// ignored by render system
+struct Disable {};

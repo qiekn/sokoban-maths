@@ -44,6 +44,7 @@ struct Vector2Float {
 };
 
 using Registry = entt::registry;
+using Dispatcher = entt::dispatcher;
 using Entity = entt::entity;
 
 // specialize std::hash for Vector2Int

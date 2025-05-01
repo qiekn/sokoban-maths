@@ -1,15 +1,18 @@
 #include "managers/input-manager.h"
 #include <raylib.h>
+#include <algorithm>
 #include <memory>
 #include <utility>
 #include <vector>
 #include "commponents/components.h"
 #include "constants.h"
 #include "maid.h"
+#include "managers/command-manager.h"
 #include "systems/move-system.h"
 #include "types.h"
 
-InputManager::InputManager(Registry& registry) : registry_(registry) {}
+InputManager::InputManager(Registry& registry, CommandManager& command_manager)
+    : registry_(registry), command_manager_(command_manager) {}
 
 InputManager::~InputManager() {}
 
@@ -35,11 +38,7 @@ std::unique_ptr<Command> InputManager::HandleInput() {
   if (timer - last_trigger_time_ >= cooldown_) {
     if (IsKeyDown(KEY_Z)) {
       last_trigger_time_ = timer;
-      if (!history_.empty()) {
-        auto cmd = std::move(history_.back());
-        history_.pop_back();
-        cmd->Undo();
-      }
+      command_manager_.Undo();
       return std::make_unique<EmptyCommand>();
     }
   }
@@ -57,14 +56,8 @@ std::unique_ptr<Command> InputManager::HandleInput() {
 
 void InputManager::Update() {
   auto cmd = std::move(HandleInput());
-  if (cmd == nullptr) return;
-  if (!cmd->IsEmpty()) {
-    while (history_.size() >= kMaxUndoHistry) {
-      history_.pop_front();
-    }
-    cmd->Execute();
-    history_.emplace_back(std::move(cmd));
-  }
+  if (cmd == nullptr || cmd->IsEmpty()) return;
+  command_manager_.Execute(std::move(cmd));
 }
 
 Vector2Int InputManager::GetMoveInput() {

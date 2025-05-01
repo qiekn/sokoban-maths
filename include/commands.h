@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "commponents/components.h"
 #include "entt.h"
 #include "systems/move-system.h"
 #include "types.h"
@@ -14,6 +15,18 @@ public:
 
 protected:
   bool is_empty_command_ = false;
+};
+
+/**
+ * @class EmptyCommand
+ * @brief Do Nothing. Just Return
+ *
+ */
+class EmptyCommand : public Command {
+public:
+  EmptyCommand() { is_empty_command_ = true; }
+  void Execute() override { return; }
+  void Undo() override { return; }
 };
 
 /**
@@ -73,14 +86,23 @@ private:
   Registry& registry_;
 };
 
-/**
- * @class EmptyCommand
- * @brief Do Nothing. Just Return
- *
- */
-class EmptyCommand : public Command {
+class MathOperatorCommand : public Command {
 public:
-  EmptyCommand() { is_empty_command_ = true; }
-  void Execute() override { return; }
-  void Undo() override { return; }
+  MathOperatorCommand(Registry& registry, Dispatcher& dispatcher,
+                      Entity num_entity, Entity op_entity)
+      : registry_(registry),
+        dispatcher_(dispatcher),
+        num_entity_(num_entity),
+        op_entitty_(op_entity) {}
+
+  virtual void Execute() override;
+  virtual void Undo() override;
+
+private:
+  Registry& registry_;
+  Dispatcher& dispatcher_;
+  Entity num_entity_;
+  Entity op_entitty_;
+  int old_value_;
+  SpriteType old_type_;
 };

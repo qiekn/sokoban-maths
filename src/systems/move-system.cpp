@@ -1,6 +1,7 @@
 #include "systems/move-system.h"
 #include "commponents/components.h"
 #include "constants.h"
+#include "events.h"
 #include "types.h"
 
 /**
@@ -23,6 +24,7 @@ bool MoveSystem::TryMove(MoveBuffer& to_move, Entity entity, Vector2Int dir,
   bool src_is_number = registry_.all_of<Number>(entity);
   bool dest_is_operator = operator_map_.find(dest) != operator_map_.end();
   if (src_is_number && dest_is_operator) {
+    dispatcher_.trigger(NumberToOperatorEvent{entity, operator_map_[dest]});
     return true;
   }
 
@@ -84,7 +86,7 @@ MoveBuffer MoveSystem::Move(std::vector<Entity> entities, Vector2Int dir) {
 template <typename Component>
 void MoveSystem::UpdateMap(Map& map) {
   map.clear();
-  auto view = registry_.view<Position, Component>();
+  auto view = registry_.view<Position, Component>(entt::exclude<Disable>);
   for (auto e : view) {
     const auto& pos = registry_.get<Position>(e);
     map[pos] = e;

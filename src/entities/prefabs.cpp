@@ -15,7 +15,7 @@ void Prefabs::CreatePlayer(Position pos) {
   auto sprite_renderer = SpriteRenderer{
       .color = BLUE,
       .text = "P",
-      .type = SpriteType::kFill,
+      .type = SpriteType::kText,
   };
   registry_.emplace<SpriteRenderer>(entity, sprite_renderer);
 }
@@ -64,6 +64,7 @@ void Prefabs::CreateOperatorAdd(Position pos) {
   auto entity = registry_.create();
   auto add = [](int a, int b) { return a + b; };
   auto sprite_renderer = SpriteRenderer{
+      .color = OperatorColor::kBlue,
       .path = kAssets / "sprites/add.png",
       .type = SpriteType::kTexture,
   };
@@ -77,10 +78,11 @@ void Prefabs::CreateOperatorSub(Position pos) {
   auto entity = registry_.create();
   auto sub = [](int a, int b) { return a - b; };
   auto sprite_renderer = SpriteRenderer{
+      .color = OperatorColor::kYellow,
       .path = kAssets / "sprites/sub.png",
       .type = SpriteType::kTexture,
   };
-  registry_.emplace<MathOperator>(entity, "+", sub);
+  registry_.emplace<MathOperator>(entity, "-", sub);
   registry_.emplace<SpriteRenderer>(entity, sprite_renderer);
   registry_.emplace<Position>(entity, pos);
   registry_.emplace<Movable>(entity);
@@ -90,10 +92,11 @@ void Prefabs::CreateOperatorMul(Position pos) {
   auto entity = registry_.create();
   auto mul = [](int a, int b) { return a * b; };
   auto sprite_renderer = SpriteRenderer{
+      .color = OperatorColor::kPink,
       .path = kAssets / "sprites/mul.png",
       .type = SpriteType::kTexture,
   };
-  registry_.emplace<MathOperator>(entity, "+", mul);
+  registry_.emplace<MathOperator>(entity, "*", mul, 1);
   registry_.emplace<SpriteRenderer>(entity, sprite_renderer);
   registry_.emplace<Position>(entity, pos);
   registry_.emplace<Movable>(entity);
@@ -103,10 +106,11 @@ void Prefabs::CreateOperatorDiv(Position pos) {
   auto entity = registry_.create();
   auto div = [](int a, int b) { return a / b; };
   auto sprite_renderer = SpriteRenderer{
+      .color = OperatorColor::kViolet,
       .path = kAssets / "sprites/div.png",
       .type = SpriteType::kTexture,
   };
-  registry_.emplace<MathOperator>(entity, "+", div);
+  registry_.emplace<MathOperator>(entity, "/", div, 0);
   registry_.emplace<SpriteRenderer>(entity, sprite_renderer);
   registry_.emplace<Position>(entity, pos);
   registry_.emplace<Movable>(entity);

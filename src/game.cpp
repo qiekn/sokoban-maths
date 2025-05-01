@@ -28,7 +28,7 @@ void Game::Run() {
   }
 }
 
-void Game::Update() { Maid::Instance().input_system_.Update(); }
+void Game::Update() { Maid::Instance().input_manager.Update(); }
 
 void Game::Draw() {
   BeginDrawing();
