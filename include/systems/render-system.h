@@ -7,13 +7,19 @@
 class RenderSystem {
 public:
   RenderSystem();
-  void Draw();
+  void DrawScene();
+  void DrawUI();
 
 private:
+  // scene
   void DrawBackground();
   void DrawGrid();
   void DrawEntities();
   void DrawNumbers();
 
+  // ui
+  void DrawImGui();
+
+  // helper functions
   void HelperDrawText(const char* text, Position pos, Color color);
 };

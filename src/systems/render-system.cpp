@@ -3,19 +3,23 @@
 #include <string>
 #include "commponents/components.h"
 #include "constants.h"
+#include "imgui.h"
 #include "maid.h"
 #include "managers/texture-manager.h"
+#include "rlimgui.h"
 #include "types.h"
 #include "utils.h"
 
 RenderSystem::RenderSystem() {}
 
-void RenderSystem::Draw() {
+void RenderSystem::DrawScene() {
   DrawBackground();
   DrawGrid();
   DrawEntities();
   DrawNumbers();
 }
+
+void RenderSystem::DrawUI() { DrawImGui(); }
 
 void RenderSystem::DrawBackground() {
   auto background_outer = Color{38, 30, 67, 255};
@@ -95,6 +99,15 @@ void RenderSystem::DrawNumbers() {
     auto text = std::to_string(number.value);
     HelperDrawText(text.c_str(), pos, WHITE);
   }
+}
+
+void RenderSystem::DrawImGui() {
+  rlImGuiBegin();
+
+  bool open = true;
+  ImGui::ShowDemoWindow(&open);
+
+  rlImGuiEnd();
 }
 
 void RenderSystem::HelperDrawText(const char* text, Position pos, Color color) {

@@ -1,7 +1,9 @@
 #include "game.h"
 #include <raylib.h>
 #include "constants.h"
+#include "imgui.h"
 #include "maid.h"
+#include "rlimgui.h"
 
 Game::Game() {}
 
@@ -18,6 +20,7 @@ void Game::Run() {
   InitWindow(kScreenWidth, kScreenHeight, "game");
   SetTargetFPS(kFps);
   is_running_ = true;
+  rlImGuiSetup(true);
 
   Maid::Instance().level_manager_.LoadJson();
   Maid::Instance().level_manager_.InitLevel();
@@ -32,10 +35,12 @@ void Game::Update() { Maid::Instance().input_manager.Update(); }
 
 void Game::Draw() {
   BeginDrawing();
+
   BeginMode2D(camera_);
-
-  Maid::Instance().render_system_.Draw();
-
+  Maid::Instance().render_system_.DrawScene();
   EndMode2D();
+
+  Maid::Instance().render_system_.DrawUI();
+
   EndDrawing();
 }
