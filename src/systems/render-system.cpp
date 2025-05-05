@@ -105,7 +105,7 @@ void RenderSystem::DrawImGui() {
   rlImGuiBegin();
 
   bool open = true;
-  ImGui::ShowDemoWindow(&open);
+  // ImGui::ShowDemoWindow(&open);
 
   rlImGuiEnd();
 }
