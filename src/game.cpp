@@ -20,7 +20,13 @@ void Game::Run() {
   InitWindow(kScreenWidth, kScreenHeight, "game");
   SetTargetFPS(kFps);
   is_running_ = true;
+
+  // ImGui
   rlImGuiSetup(true);
+  ImGuiIO& io = ImGui::GetIO();
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+  io.FontGlobalScale = 1.25f;
+  ImGui::StyleColorsClassic();
 
   Maid::Instance().level_manager_.LoadJson();
   Maid::Instance().level_manager_.InitLevel();
