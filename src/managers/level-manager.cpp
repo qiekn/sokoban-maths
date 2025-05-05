@@ -27,21 +27,15 @@ void LevelManager::LoadJson() {
     for (int x = 0; x < width; ++x) {
       const std::string& type = map[y][x];
       auto pos = Position{x, y};
-      if (type == "W") {
-        prefabs_.CreateWall(pos);
-      } else if (type == "P") {
-        prefabs_.CreatePlayer(pos);
-      } else if (type == ".") {
-        prefabs_.CreateFloor(pos);
-      } else if (type == "+") {
-        prefabs_.CreateOperatorAdd(pos);
-      } else if (type == "-") {
-        prefabs_.CreateOperatorSub(pos);
-      } else if (type == "*") {
-        prefabs_.CreateOperatorMul(pos);
-      } else if (type == "/") {
-        prefabs_.CreateOperatorDiv(pos);
-      }
+      // clang-format off
+      if (type == "W")  prefabs_.CreateWall(pos);
+      else if (type == "P")  prefabs_.CreatePlayer(pos);
+      else if (type == ".")  prefabs_.CreateFloor(pos);
+      else if (type == "+")  prefabs_.CreateOperatorAdd(pos);
+      else if (type == "-")  prefabs_.CreateOperatorSub(pos);
+      else if (type == "*")  prefabs_.CreateOperatorMul(pos);
+      else if (type == "/")  prefabs_.CreateOperatorDiv(pos);
+      // clang-format on
     }
   }
 
